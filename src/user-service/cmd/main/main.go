@@ -1,8 +1,8 @@
 package main
 
-import "practice/src/user-service/database"
+import "fmt"
 
 func main() {
-	_ = database.GetDB()
+	fmt.Println("running....")
 
 }

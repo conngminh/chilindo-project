@@ -4,7 +4,7 @@ import "gorm.io/gorm"
 
 type User struct {
 	gorm.Model  `gorm:"-"`
-	Id          string `json:"id" gorm:"primaryKey"`
+	Id          int    `json:"id" gorm:"primaryKey"`
 	FirstName   string `json:"firstname"`
 	LastName    string `json:"lastname"`
 	UserName    string `json:"username" gorm:"unique"`
