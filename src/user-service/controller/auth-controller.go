@@ -29,6 +29,10 @@ func (a AuthController) SignUp(c *gin.Context) {
 		log.Println("Signup:Error ShouldBindJson in package controller", err.Error())
 		return
 	}
+	if err := userBody.User.HashPassword(userBody.User.Password); err != nil {
+		log.Println("Sign up:error to hash password in package controller")
+		return
+	}
 	user, err := a.AuthService.CreateUser(&userBody)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
