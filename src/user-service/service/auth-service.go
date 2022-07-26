@@ -1,24 +1,29 @@
 package service
 
 import (
+	"log"
 	"practice/src/user-service/dto"
 	"practice/src/user-service/model"
 	"practice/src/user-service/repository"
 )
 
 type IAuthService interface {
-	CreateUser(dto *dto.SignUpSTO) (*model.User, error)
+	CreateUser(dto *dto.SignUpDTO) (*model.User, error)
 }
 
 type AuthService struct {
-	UseRepository *repository.IUserRepository
+	UserRepository repository.IUserRepository
 }
 
-func NewAuthService(useRepository *repository.IUserRepository) *AuthService {
-	return &AuthService{UseRepository: useRepository}
+func NewAuthService(userRepository repository.IUserRepository) *AuthService {
+	return &AuthService{UserRepository: userRepository}
 }
 
-func (a AuthService) CreateUser(dto *dto.SignUpSTO) (*model.User, error) {
-	//TODO implement me
-	panic("implement me")
+func (a AuthService) CreateUser(dto *dto.SignUpDTO) (*model.User, error) {
+	user, err := a.UserRepository.CreateUser(dto)
+	if err != nil {
+		log.Println("Sign up: error to sign up in package service")
+		return nil, err
+	}
+	return user, nil
 }

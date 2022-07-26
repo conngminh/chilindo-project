@@ -5,20 +5,22 @@ import (
 	"practice/src/user-service/controller"
 )
 
-type IRoute interface {
+type IAuthRoute interface {
 	setRoute()
 }
 
-type Route struct {
+type AuthRoute struct {
 	AuthController controller.IAuthController
-	Route          *gin.Context
+	Route          *gin.Engine
 }
 
-func NewRoute(authController controller.IAuthController, route *gin.Context) *Route {
-	return &Route{AuthController: authController, Route: route}
+func NewAuthRoute(authController controller.IAuthController, authRoute *gin.Engine) *AuthRoute {
+	return &AuthRoute{AuthController: authController, Route: authRoute}
 }
 
-func (r Route) setRoute() {
-	//TODO implement me
-	panic("implement me")
+func (a AuthRoute) SetRoute() {
+	api := a.Route.Group("/api/auth")
+	{
+		api.POST("/signup", a.AuthController.SignUp)
+	}
 }

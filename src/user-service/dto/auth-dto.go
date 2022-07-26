@@ -2,6 +2,6 @@ package dto
 
 import "practice/src/user-service/model"
 
-type SignUpSTO struct {
-	user *model.User
+type SignUpDTO struct {
+	User *model.User
 }
