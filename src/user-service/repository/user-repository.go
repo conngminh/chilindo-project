@@ -20,6 +20,10 @@ func NewUserRepository(db *gorm.DB) *UserRepository {
 }
 
 func (u UserRepository) CreateUser(dto *dto.SignUpDTO) (*model.User, error) {
+	if err := dto.User.HashPassword(dto.User.Password); err != nil {
+		log.Println("Sign up:error to hash password in package repository")
+		return nil, err
+	}
 	record := u.Db.Create(&dto.User)
 	if record.Error != nil {
 		log.Println("sign up: error to sign up in package repository")
