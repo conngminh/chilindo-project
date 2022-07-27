@@ -6,10 +6,12 @@ import (
 	"net/http"
 	"practice/src/user-service/dto"
 	"practice/src/user-service/service"
+	"practice/src/user-service/token"
 )
 
 type IAuthController interface {
 	SignUp(c *gin.Context)
+	SignIn(c *gin.Context)
 }
 
 type AuthController struct {
@@ -38,4 +40,35 @@ func (a AuthController) SignUp(c *gin.Context) {
 		return
 	}
 	c.JSONP(http.StatusOK, user)
+}
+
+func (a AuthController) SignIn(c *gin.Context) {
+	var (
+		user *dto.SignInDTO
+		jwt  *token.JWTClaim
+	)
+	if err := c.ShouldBindJSON(&user); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"sign-in": "Error to should bind json in package controller",
+		})
+		log.Println("sign-in: Error to should bind json in package controller", err)
+		return
+	}
+	userLogin, err := a.AuthService.GetUserByEmailAndPassword(user)
+	if err != nil {
+		log.Println("sign-in: error to login in package controller", err)
+		return
+	}
+	token, errToken := jwt.GenerateJWT(userLogin.Email, userLogin.UserName, userLogin.Id, userLogin.Role)
+
+	if errToken != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "error to generate token in package sign-in controller",
+		})
+		log.Println("sign-in: error to generateJWT in package controller", err)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"token": token,
+	})
 }

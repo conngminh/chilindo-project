@@ -22,5 +22,6 @@ func (a AuthRoute) SetRoute() {
 	api := a.Route.Group("/api/auth")
 	{
 		api.POST("/signup", a.AuthController.SignUp)
+		api.POST("/signin", a.AuthController.SignIn)
 	}
 }

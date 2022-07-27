@@ -9,6 +9,7 @@ import (
 
 type IAuthService interface {
 	CreateUser(dto *dto.SignUpDTO) (*model.User, error)
+	GetUserByEmailAndPassword(dto *dto.SignInDTO) (*model.User, error)
 }
 
 type AuthService struct {
@@ -22,7 +23,16 @@ func NewAuthService(userRepository repository.IUserRepository) *AuthService {
 func (a AuthService) CreateUser(dto *dto.SignUpDTO) (*model.User, error) {
 	user, err := a.UserRepository.CreateUser(dto)
 	if err != nil {
-		log.Println("Sign up: error to sign up in package service")
+		log.Println("Sign up: error to sign up in package service", err)
+		return nil, err
+	}
+	return user, nil
+}
+
+func (a AuthService) GetUserByEmailAndPassword(dto *dto.SignInDTO) (*model.User, error) {
+	user, err := a.UserRepository.GetUserByEmailAndPassword(dto)
+	if err != nil {
+		log.Println("sign-in: error to sign-in in package service", err)
 		return nil, err
 	}
 	return user, nil
