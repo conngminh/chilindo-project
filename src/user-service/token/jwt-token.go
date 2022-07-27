@@ -1,7 +1,7 @@
 package token
 
 import (
-	"github.com/golang-jwt/jwt/v4"
+	"github.com/golang-jwt/jwt"
 	"log"
 	"time"
 )
@@ -21,7 +21,7 @@ type JWTClaim struct {
 	jwt.StandardClaims
 }
 
-func (j *JWTClaim) GenerateJWT(email string, username string, id int, role string) (string, error) {
+func GenerateJWT(email string, username string, id int, role string) (tokenString string, err error) {
 	expirationTime := time.Now().Add(1 * time.Hour)
 	claims := &JWTClaim{
 		Email:    email,
@@ -33,12 +33,8 @@ func (j *JWTClaim) GenerateJWT(email string, username string, id int, role strin
 		},
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS384, claims)
-	tokenString, err := token.SignedString(jwtKey)
-	if err != nil {
-		log.Println("GenerateJWT: error to generate JWT in package token")
-		return "", err
-	}
-	return tokenString, err
+	tokenString, err = token.SignedString(jwtKey)
+	return
 }
 
 func ExtractToken(signedToken string) (*JWTClaim, error) {

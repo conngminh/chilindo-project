@@ -12,10 +12,10 @@ type User struct {
 	FirstName   string `json:"firstname"`
 	LastName    string `json:"lastname"`
 	UserName    string `json:"username" gorm:"unique"`
-	Password    string `json:"-" json:"password" gorm:"type:nvarchar(100)"`
+	Password    string `json:"password,omitempty" gorm:"type:nvarchar(100)"`
 	Email       string `json:"email" gorm:"unique"`
 	PhoneNumber string `json:"phoneNumber"`
-	Gender      int    `json:"gender" gorm:"default:0"` // 0 is male, 1 is female, 2 is different
+	Gender      string `json:"gender"`
 	Language    string `json:"language"`
 	Role        string `json:"role" gorm:"default:user"` //0 is user, 1 is admin
 }
