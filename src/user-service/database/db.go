@@ -33,8 +33,8 @@ func ConnectDatabase() {
 		panic("Connect database: error to connect database")
 	}
 	log.Println("Connect database:successfully")
-	if err := Db.AutoMigrate(&model.User{}); err != nil {
-		log.Println("Create table database: fail to migrate database!")
+	if err := Db.AutoMigrate(&model.User{}, &model.Address{}); err != nil {
+		log.Println("Create table database: fail to migrate database!", err)
 		return
 	}
 	log.Println("Create table database: migrate database successfully!")

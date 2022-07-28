@@ -12,12 +12,19 @@ import (
 
 func main() {
 	db := database.GetDB()
+
 	r := Route()
-	userRepo := repository.NewUserRepository(db)
-	authService := service.NewAuthService(userRepo)
+	authRepo := repository.NewAuthRepository(db)
+	authService := service.NewAuthService(authRepo)
 	authController := controller.NewAuthController(authService)
 	authRoute := route.NewAuthRoute(authController, r)
 	authRoute.SetRoute()
+
+	userRepo := repository.NewUserRepository(db)
+	userService := service.NewUserService(userRepo)
+	userController := controller.NewUserController(userService)
+	userRoute := route.NewUserRoute(userController, r)
+	userRoute.SetRoute()
 
 	if err := r.Run(":1011"); err != nil {
 		log.Println("Open port is fail!")

@@ -13,15 +13,15 @@ type IAuthService interface {
 }
 
 type AuthService struct {
-	UserRepository repository.IUserRepository
+	AuthRepository repository.IAuthRepository
 }
 
-func NewAuthService(userRepository repository.IUserRepository) *AuthService {
-	return &AuthService{UserRepository: userRepository}
+func NewAuthService(authRepository repository.IAuthRepository) *AuthService {
+	return &AuthService{AuthRepository: authRepository}
 }
 
 func (a *AuthService) CreateUser(user *model.User) (*model.User, error) {
-	userCreate, err := a.UserRepository.CreateUser(user)
+	userCreate, err := a.AuthRepository.CreateUser(user)
 	if err != nil {
 		log.Println("Sign up: error to sign up in package service", err)
 		return nil, err
@@ -30,7 +30,7 @@ func (a *AuthService) CreateUser(user *model.User) (*model.User, error) {
 }
 
 func (a *AuthService) GetUserByEmailAndPassword(dto *dto.SignInDTO) (*model.User, error) {
-	user, err := a.UserRepository.GetUserByEmailAndPassword(dto)
+	user, err := a.AuthRepository.GetUserByEmailAndPassword(dto)
 	if err != nil {
 		log.Println("sign-in: error to sign-in in package service", err)
 		return nil, err

@@ -62,7 +62,7 @@ func (a *AuthController) SignIn(c *gin.Context) {
 		c.Abort()
 		return
 	}
-	tokenString, errToken := token.GenerateJWT(userLogin.Email, userLogin.UserName, userLogin.Id, userLogin.Role)
+	tokenString, errToken := token.GenerateJWT(userLogin.Email, userLogin.Username, userLogin.Id, userLogin.Role)
 	if errToken != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "error to generate token in package sign-in controller",
