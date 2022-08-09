@@ -2,14 +2,18 @@ package service
 
 import (
 	"log"
+	"practice/pkg/pb/admin"
 	"practice/src/user-service/dto"
 	"practice/src/user-service/model"
 	"practice/src/user-service/repository"
+	"practice/src/user-service/token"
+	"strings"
 )
 
 type IAuthService interface {
 	CreateUser(user *model.User) (*model.User, error)
 	GetUserByEmailAndPassword(dto *dto.SignInDTO) (*model.User, error)
+	CheckIsAdmin(req *admin.CheckIsAdminRequest) (*admin.CheckIsAdminResponse, error)
 }
 
 type AuthService struct {
@@ -36,4 +40,28 @@ func (a *AuthService) GetUserByEmailAndPassword(dto *dto.SignInDTO) (*model.User
 		return nil, err
 	}
 	return user, nil
+}
+
+func (u *AuthService) CheckIsAdmin(req *admin.CheckIsAdminRequest) (*admin.CheckIsAdminResponse, error) {
+	isAuth := false
+	isAdmin := false
+	tokenString := req.Token
+
+	tokenResult := strings.TrimPrefix(tokenString, "Bearer ")
+
+	claims, err := token.ExtractToken(tokenResult)
+	if err != nil {
+		log.Println("CheckIsAdmin: ", err)
+		return nil, err
+	}
+
+	isAuth = true
+	if claims.Role == "admin" {
+		isAdmin = true
+	}
+
+	return &admin.CheckIsAdminResponse{
+		IsAuth:  isAuth,
+		IsAdmin: isAdmin,
+	}, nil
 }

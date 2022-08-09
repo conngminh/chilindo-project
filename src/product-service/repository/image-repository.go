@@ -1,10 +1,10 @@
 package repository
 
 import (
-	"chilindo/src/product-service/dtos"
-	"chilindo/src/product-service/models"
 	"gorm.io/gorm"
 	"log"
+	"practice/src/product-service/dtos"
+	"practice/src/product-service/models"
 )
 
 type IImageRepository interface {

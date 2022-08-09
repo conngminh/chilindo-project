@@ -1,6 +1,6 @@
 package dtos
 
-import "chilindo/src/product-service/models"
+import "practice/src/product-service/models"
 
 type ImageDTO struct {
 	Image     *models.Image

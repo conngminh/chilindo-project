@@ -1,10 +1,10 @@
 package services
 
 import (
-	"chilindo/src/product-service/dtos"
-	"chilindo/src/product-service/models"
-	"chilindo/src/product-service/repository"
 	"log"
+	"practice/src/product-service/dtos"
+	"practice/src/product-service/models"
+	"practice/src/product-service/repository"
 )
 
 type IImageService interface {

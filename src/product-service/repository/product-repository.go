@@ -1,11 +1,11 @@
 package repository
 
 import (
-	"chilindo/src/product-service/dtos"
-	"chilindo/src/product-service/models"
 	"fmt"
 	"gorm.io/gorm"
 	"log"
+	"practice/src/product-service/dtos"
+	"practice/src/product-service/models"
 )
 
 type IProductRepository interface {
@@ -29,6 +29,7 @@ type ProductRepository struct {
 func NewProductRepository(db *gorm.DB) *ProductRepository {
 	return &ProductRepository{db: db}
 }
+
 func (p ProductRepository) CreateOption(dto *dtos.CreateOptionDTO) (*models.Option, error) {
 	record := p.db.Create(&dto.Option)
 	if record.Error != nil {

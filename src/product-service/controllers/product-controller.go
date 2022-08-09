@@ -1,13 +1,13 @@
 package controllers
 
 import (
-	"chilindo/src/product-service/config"
-	"chilindo/src/product-service/dtos"
-	"chilindo/src/product-service/models"
-	"chilindo/src/product-service/services"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
+	"practice/src/product-service/config"
+	"practice/src/product-service/dtos"
+	"practice/src/product-service/models"
+	"practice/src/product-service/services"
 	"strconv"
 )
 

@@ -38,7 +38,7 @@ func (u *AuthRepository) GetUserByEmailAndPassword(dto *dto.SignInDTO) (*model.U
 
 	record := u.Db.Where("email =  ?", dto.Email).Find(&user)
 	if record.Error != nil {
-		log.Println("sign-in: error to find user sign-in in package repository ", record.Error)
+		log.Println("sign-in: error to find admin sign-in in package repository ", record.Error)
 		return nil, record.Error
 	}
 

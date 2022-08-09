@@ -31,6 +31,7 @@ func IsAuth() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
+
 		c.Set(config.UserId, claims.Id)
 		c.Next()
 	}

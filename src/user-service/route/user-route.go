@@ -20,7 +20,7 @@ func NewUserRoute(userController controller.IUserController, route *gin.Engine) 
 }
 
 func (u UserRoute) SetRoute() {
-	apiAddress := u.route.Group("/api/user/address").Use(middleware.IsAuth())
+	apiAddress := u.route.Group("/api/admin/address").Use(middleware.IsAuth())
 	{
 		apiAddress.POST("/create", u.userController.CreateAddress)
 	}
